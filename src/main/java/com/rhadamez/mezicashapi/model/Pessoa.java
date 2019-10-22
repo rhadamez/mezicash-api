@@ -1,5 +1,6 @@
 package com.rhadamez.mezicashapi.model;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,7 +8,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Categoria {
+public class Pessoa {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +16,15 @@ public class Categoria {
 
 	@NotNull
 	private String nome;
+
+	@NotNull
+	private String email;
+
+	@NotNull
+	private Boolean ativo;
+
+	@Embedded
+	private Endereco endereco;
 
 	public Long getId() {
 		return id;
@@ -30,6 +40,30 @@ public class Categoria {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 	@Override
@@ -48,7 +82,7 @@ public class Categoria {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Pessoa other = (Pessoa) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

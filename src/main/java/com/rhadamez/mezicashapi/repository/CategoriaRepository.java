@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.rhadamez.mezicashapi.model.Categoria;
 
 @Repository
-public interface Categorias extends JpaRepository<Categoria, Long> {
+public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
 }

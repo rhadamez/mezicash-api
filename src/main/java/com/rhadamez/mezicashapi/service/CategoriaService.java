@@ -7,20 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rhadamez.mezicashapi.model.Categoria;
-import com.rhadamez.mezicashapi.repository.Categorias;
+import com.rhadamez.mezicashapi.repository.CategoriaRepository;
 
 @Service
 public class CategoriaService {
 
 	@Autowired
-	private Categorias categorias;
+	private CategoriaRepository categoriasRepository;
 
 	public List<Categoria> listar() {
-		return categorias.findAll();
+		return categoriasRepository.findAll();
 	}
 
 	public Optional<Categoria> buscar(Long id) {
-		Optional<Categoria> categoria = categorias.findById(id);
+		Optional<Categoria> categoria = categoriasRepository.findById(id);
 
 		if (categoria.isPresent()) {
 			return categoria;
@@ -30,7 +30,7 @@ public class CategoriaService {
 	}
 
 	public Categoria salvar(Categoria categoria) {
-		Categoria categoriaSalva = categorias.save(categoria);
+		Categoria categoriaSalva = categoriasRepository.save(categoria);
 
 		return categoriaSalva;
 	}
