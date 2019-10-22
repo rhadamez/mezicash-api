@@ -27,6 +27,8 @@ import org.springframework.web.context.request.WebRequest;
 import com.rhadamez.mezicashapi.event.RecursoCriadoEvent;
 import com.rhadamez.mezicashapi.exceptionhandler.MezicashExceptionHandler.Erro;
 import com.rhadamez.mezicashapi.model.Lancamento;
+import com.rhadamez.mezicashapi.repository.LancamentoRepository;
+import com.rhadamez.mezicashapi.repository.filter.LancamentoFilter;
 import com.rhadamez.mezicashapi.service.LancamentoService;
 import com.rhadamez.mezicashapi.service.exception.PessoaInexistenteOuInativaException;
 
@@ -39,14 +41,16 @@ public class LancamentoResource {
 
 	@Autowired
 	private LancamentoService lancamentoService;
+	
+	@Autowired
+	private LancamentoRepository lancamentoRepository;
 
 	@Autowired
 	private ApplicationEventPublisher publisher;
 
 	@GetMapping
-	public ResponseEntity<?> listar() {
-		List<Lancamento> lancamentos = lancamentoService.listar();
-		return !lancamentos.isEmpty() ? ResponseEntity.ok(lancamentos) : ResponseEntity.noContent().build();
+	public List<Lancamento> pesquisar(LancamentoFilter lancamentoFilter) {
+		return lancamentoRepository.filtrar(lancamentoFilter);
 	}
 
 	@GetMapping("/{id}")
