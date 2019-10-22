@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Pessoa {
 
@@ -66,6 +68,11 @@ public class Pessoa {
 		this.endereco = endereco;
 	}
 
+	@JsonIgnore
+	public boolean isInativo() {
+		return !this.ativo;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
