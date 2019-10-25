@@ -10,15 +10,21 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import com.rhadamez.mezicashapi.config.property.MezicashApiProperty;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
 
-	private String originPermitida = "http://localhost:8000"; // TODO: configurar para diferentes ambientes
+	@Autowired
+	private MezicashApiProperty mezicashApiProperty;
+	
+	private String originPermitida = mezicashApiProperty.getOriginPermitida(); // TODO: configurar para diferentes ambientes
 	
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
