@@ -24,8 +24,6 @@ public class CorsFilter implements Filter {
 	@Autowired
 	private MezicashApiProperty mezicashApiProperty;
 	
-	private String originPermitida = mezicashApiProperty.getOriginPermitida();
-	
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
 			throws IOException, ServletException {
@@ -37,10 +35,10 @@ public class CorsFilter implements Filter {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) resp;
 
-		response.setHeader("Access-Control-Allow-Origin", originPermitida);
+		response.setHeader("Access-Control-Allow-Origin", mezicashApiProperty.getOriginPermitida());
 		response.setHeader("Access-Control-Allow-Credentials", "true");
 		
-		if (request.getMethod().equals("OPTIONS") && originPermitida.equals(request.getHeader("Origin"))) {
+		if (request.getMethod().equals("OPTIONS") && mezicashApiProperty.getOriginPermitida().equals(request.getHeader("Origin"))) {
 			response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
 			response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
 			response.setHeader("Access-Control-Allow-Max-Age", "3600");
