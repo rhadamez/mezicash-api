@@ -32,6 +32,7 @@ import com.rhadamez.mezicashapi.exceptionhandler.MezicashExceptionHandler.Erro;
 import com.rhadamez.mezicashapi.model.Lancamento;
 import com.rhadamez.mezicashapi.repository.LancamentoRepository;
 import com.rhadamez.mezicashapi.repository.filter.LancamentoFilter;
+import com.rhadamez.mezicashapi.repository.projection.ResumoLancamento;
 import com.rhadamez.mezicashapi.service.LancamentoService;
 import com.rhadamez.mezicashapi.service.exception.PessoaInexistenteOuInativaException;
 
@@ -56,6 +57,11 @@ public class LancamentoResource {
 		return lancamentoRepository.filtrar(lancamentoFilter, pageable);
 	}
 
+	@GetMapping(params = "resumo")
+	public Page<ResumoLancamento> resumir(LancamentoFilter lancamentoFilter, Pageable pageable) {
+		return lancamentoRepository.resumir(lancamentoFilter, pageable);
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<Lancamento> buscarPeloId(@PathVariable Long id) {
 		Optional<Lancamento> lancamentos = lancamentoService.buscar(id);
