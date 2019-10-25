@@ -24,7 +24,7 @@ public class CorsFilter implements Filter {
 	@Autowired
 	private MezicashApiProperty mezicashApiProperty;
 	
-	private String originPermitida = mezicashApiProperty.getOriginPermitida(); // TODO: configurar para diferentes ambientes
+	private String originPermitida = mezicashApiProperty.getOriginPermitida();
 	
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
