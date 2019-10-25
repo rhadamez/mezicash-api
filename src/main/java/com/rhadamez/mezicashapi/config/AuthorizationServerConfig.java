@@ -12,27 +12,29 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+import com.rhadamez.mezicashapi.security.AppUserDetailsService;
+
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+
+	@Autowired
+	private AppUserDetailsService userDetailsService;
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.inMemory().withClient("angular").secret("angularsecret").scopes("read", "write")
-				.authorizedGrantTypes("password", "refresh_token")
-				.accessTokenValiditySeconds(20)
-				.refreshTokenValiditySeconds(3600 * 24);
+		clients.inMemory().withClient("angular").secret("$2a$10$QWe8xjICuYjhMpr2D8WoGO/sAHS/T.A/RpqRaO6dWZXqjXqXuLr.C")
+				.scopes("read", "write").authorizedGrantTypes("password", "refresh_token")
+				.accessTokenValiditySeconds(20).refreshTokenValiditySeconds(3600 * 24);
 	}
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		endpoints.tokenStore(tokenStore())
-			.accessTokenConverter(accessTokenConverter())
-			.reuseRefreshTokens(false)
-			.authenticationManager(authenticationManager);
+		endpoints.tokenStore(tokenStore()).accessTokenConverter(accessTokenConverter()).reuseRefreshTokens(false)
+				.userDetailsService(this.userDetailsService).authenticationManager(authenticationManager);
 	}
 
 	@Bean
